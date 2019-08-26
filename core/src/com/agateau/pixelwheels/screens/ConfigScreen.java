@@ -22,10 +22,12 @@ import com.agateau.pixelwheels.Constants;
 import com.agateau.pixelwheels.GameConfig;
 import com.agateau.pixelwheels.PwGame;
 import com.agateau.pixelwheels.PwRefreshHelper;
+import com.agateau.pixelwheels.VersionInfo;
 import com.agateau.pixelwheels.gameinput.GameInputHandlerFactories;
 import com.agateau.pixelwheels.gameinput.GameInputHandlerFactory;
 import com.agateau.pixelwheels.gameinput.GamepadInputHandler;
 import com.agateau.pixelwheels.gameinput.KeyboardInputHandler;
+import com.agateau.pixelwheels.utils.StringUtils;
 import com.agateau.ui.UiAssets;
 import com.agateau.ui.anchor.AnchorGroup;
 import com.agateau.ui.menu.ButtonMenuItem;
@@ -133,6 +135,23 @@ public class ConfigScreen extends PwStageScreen {
                                 });
                 group.addItemWithLabel("Fullscreen:", fullscreenSwitch);
             }
+        }
+
+        {
+            MenuItemGroup group = tab.addPage("About");
+            group.addLabel(StringUtils.format("Pixel Wheels %s", VersionInfo.VERSION));
+            // link to credits screen
+            group.addButton("Credits")
+                    .addListener(
+                            new ClickListener() {
+                                @Override
+                                public void clicked(InputEvent event, float x, float y) {
+                                    mGame.pushScreen(new CreditsScreen(mGame));
+                                }
+                            });
+            // link to website
+            // link to twitter
+            // link to mastodon
         }
 
         {
