@@ -22,7 +22,7 @@ import com.agateau.pixelwheels.utils.DrawUtils;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 
-class FocusIndicator {
+public class FocusIndicator {
     private static final float IN_ANIMATION_DURATION = 0.1f;
     private static final float OUT_ANIMATION_DURATION = 0.4f;
     private final Menu.MenuStyle mMenuStyle;
@@ -31,7 +31,11 @@ class FocusIndicator {
     private float mAlpha = 0;
 
     FocusIndicator(Menu menu) {
-        mMenuStyle = menu.getMenuStyle();
+        this(menu.getMenuStyle());
+    }
+
+    public FocusIndicator(Menu.MenuStyle menuStyle) {
+        mMenuStyle = menuStyle;
     }
 
     public void act(float delta) {
