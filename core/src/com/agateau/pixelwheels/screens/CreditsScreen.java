@@ -27,10 +27,32 @@ import com.agateau.utils.FileUtils;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 class CreditsScreen extends PwStageScreen {
     private final PwGame mGame;
+
+    private static class HypertextScrollPane extends ScrollPane {
+        private Group mGroup;
+
+        public HypertextScrollPane() {
+            super(null);
+            mGroup = new Group();
+            setActor(mGroup);
+        }
+
+        public Group getGroup() {
+            return mGroup;
+        }
+
+        @Override
+        protected void sizeChanged() {
+            if (mGroup != null) {
+                mGroup.setWidth(getWidth());
+            }
+        }
+    }
 
     CreditsScreen(PwGame game) {
         super(game.getAssets().ui);
@@ -46,12 +68,14 @@ class CreditsScreen extends PwStageScreen {
 
     private void setupUi() {
         UiBuilder builder = new UiBuilder(mGame.getAssets().atlas, mGame.getAssets().ui.skin);
+        builder.registerActorFactory("HypertextScrollPane", (uiBuilder, element) -> new HypertextScrollPane());
 
         AnchorGroup root = (AnchorGroup) builder.build(FileUtils.assets("screens/credits.gdxui"));
         root.setFillParent(true);
         getStage().addActor(root);
 
-        Group group = builder.getActor("creditsGroup");
+        HypertextScrollPane pane = builder.getActor("creditsScrollPane");
+        Group group = pane.getGroup();
         LimitedMarkdownParser.createActors(group, mGame.getAssets().ui.skin, loadCredits());
 
         builder.getActor("backButton")
