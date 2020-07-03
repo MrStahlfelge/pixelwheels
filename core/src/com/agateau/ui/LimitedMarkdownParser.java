@@ -51,7 +51,7 @@ public class LimitedMarkdownParser {
     private final Group mParent;
     private final Skin mSkin;
 
-    private static final Pattern LINK_PATTERN = Pattern.compile("\\[(.*)\\]\\((.*)\\)");
+    private static final Pattern LINK_PATTERN = Pattern.compile("\\[(.*)]\\((.*)\\)");
 
     public static void createActors(Group parent, Skin skin, String text) {
         LimitedMarkdownParser parser = new LimitedMarkdownParser(parent, skin);
