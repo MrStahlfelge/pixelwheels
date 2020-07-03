@@ -97,6 +97,10 @@ public class LimitedMarkdownParser {
         for (int idx = mParent.getChildren().size - 1; idx >= 0; --idx) {
             Actor actor = mParent.getChildren().get(idx);
             actor.setY(y);
+            if (actor instanceof TextButton) {
+                // Crude hack to avoid cropping the focus indicator
+                actor.setX(2);
+            }
             y += actor.getHeight();
         }
         mParent.setHeight(y);
