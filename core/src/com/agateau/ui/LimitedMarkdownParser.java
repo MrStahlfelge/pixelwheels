@@ -53,6 +53,8 @@ public class LimitedMarkdownParser {
 
     private static final Pattern LINK_PATTERN = Pattern.compile("\\[(.*)]\\((.*)\\)");
 
+    private static final int BUTTON_FOCUS_SIZE = 2;
+
     public static void createActors(Group parent, Skin skin, String text) {
         LimitedMarkdownParser parser = new LimitedMarkdownParser(parent, skin);
         parser.parse(text);
@@ -96,10 +98,14 @@ public class LimitedMarkdownParser {
         int y = 0;
         for (int idx = mParent.getChildren().size - 1; idx >= 0; --idx) {
             Actor actor = mParent.getChildren().get(idx);
-            actor.setY(y);
             if (actor instanceof TextButton) {
                 // Crude hack to avoid cropping the focus indicator
-                actor.setX(2);
+                y += BUTTON_FOCUS_SIZE;
+                actor.setX((mParent.getWidth() - actor.getWidth()) / 2);
+                actor.setY(y);
+                y += BUTTON_FOCUS_SIZE;
+            } else {
+                actor.setY(y);
             }
             y += actor.getHeight();
         }
@@ -141,7 +147,7 @@ public class LimitedMarkdownParser {
 
     private Label createLabel(String text, String styleName) {
         Label label = new Label(text, mSkin, styleName);
-        label.setAlignment(Align.left);
+        label.setAlignment(Align.center);
         label.setWrap(true);
         label.setWidth(mParent.getWidth());
         label.setHeight(label.getPrefHeight());
