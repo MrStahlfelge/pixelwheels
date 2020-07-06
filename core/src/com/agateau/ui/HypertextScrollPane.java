@@ -35,6 +35,8 @@ public class HypertextScrollPane extends ScrollPane {
     private final FocusActor mFocusActor;
     private Actor mCurrentActor = null;
 
+    private static final int BUTTON_FOCUS_SIZE = 2;
+
     private static class FocusActor extends Actor {
         private final FocusIndicator mIndicator;
 
@@ -107,7 +109,11 @@ public class HypertextScrollPane extends ScrollPane {
                 mCurrentActor.getWidth(),
                 mCurrentActor.getHeight());
         mFocusActor.setVisible(true);
-        scrollTo(actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight());
+        scrollTo(
+                actor.getX(),
+                actor.getY() - BUTTON_FOCUS_SIZE,
+                actor.getWidth(),
+                actor.getHeight() + BUTTON_FOCUS_SIZE * 2);
     }
 
     private Actor findNextVisibleFocusableActor(int dy) {
